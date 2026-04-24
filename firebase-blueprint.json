@@ -1,0 +1,81 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "profileImage": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fullName", "email", "role", "createdAt"]
+    },
+    "Instructor": {
+      "title": "Instructor",
+      "description": "Instructor information",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "specialty": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "specialty"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Course details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "instructorId": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "price": { "type": "number" },
+        "rating": { "type": "number" },
+        "ratingCount": { "type": "integer" },
+        "totalStudents": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "instructorId", "createdAt"]
+    },
+    "Lesson": {
+      "title": "Lesson",
+      "description": "Information about a specific lesson in a course",
+      "type": "object",
+      "properties": {
+        "courseId": { "type": "string" },
+        "title": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "order": { "type": "integer" },
+        "views": { "type": "integer" }
+      },
+      "required": ["courseId", "title", "videoUrl", "order"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "User course enrollment and progress",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "lastWatchedLessonId": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "joinedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "courseId", "joinedAt"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "Collection of users" },
+    "instructors": { "schema": "Instructor", "description": "Collection of instructors" },
+    "courses": { "schema": "Course", "description": "Collection of courses" },
+    "courses/{courseId}/lessons": { "schema": "Lesson", "description": "Subcollection of lessons for a course" },
+    "enrollments": { "schema": "Enrollment", "description": "Records of users enrolled in courses" }
+  }
+}
